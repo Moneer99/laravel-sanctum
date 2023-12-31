@@ -16,7 +16,18 @@ class AuthController extends Controller
 
     public function login(LoginUserRequest $request)
     {
-       return 'login page';
+        $request->validated($request->only(['email', 'password']));
+
+        if(!Auth::attempt($request->only(['email', 'password']))) {
+            return $this->error('', 'Credentials do not match', 401);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        return $this->success([
+            'user' => $user,
+            'token' => $user->createToken('API Token')->plainTextToken
+        ]);
     }
 
 }
