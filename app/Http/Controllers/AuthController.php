@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginUserRequest;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
        return 'login page';
     }
