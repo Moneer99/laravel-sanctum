@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash
 
 
 
@@ -23,6 +24,21 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
+
+        return $this->success([
+            'user' => $user,
+            'token' => $user->createToken('API Token')->plainTextToken
+        ]);
+    }
+
+    public function register(Request $request)
+    {
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
         return $this->success([
             'user' => $user,
