@@ -53,7 +53,7 @@ class TasksController extends Controller
      */
     public function show(Task $task)
     {
-
+        return $this->isNotAuthorized($task) ? $this->isNotAuthorized($task) : new TasksResource($task);
     }
 
     /**
